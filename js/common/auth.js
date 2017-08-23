@@ -10,10 +10,12 @@ let auth = (() => {
     }
 
     // user/register
-    function register(username, password) {
+    function register(username, password, email) {
         let userData = {
             username,
-            password
+            password,
+            email,
+            basket: []
         };
 
         return requester.post('user', '', 'basic', userData);

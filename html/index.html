@@ -10,6 +10,7 @@
 
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
@@ -17,12 +18,25 @@
     <script src="../node_modules/sammy/lib/plugins/sammy.handlebars.js"></script>
 
     <script src="../js/common/requester.js"></script>
-    <script src="../js/common/auth.js"></script>
     <script src="../js/common/homeController.js"></script>
+    <script src="../js/controllers/adminController.js"></script>
+    <script src="../js/common/utils.js"></script>
+    <script src="../js/controllers/userController.js"></script>
+    <script src="../js/services/userService.js"></script>
+    <script src="../js/services/adminService.js"></script>
+    <script src="../js/common/auth.js"></script>
+
 </head>
 
 <body>
 
+<div id="notifications">
+    <section id="loadingBox" class="loadingBox">Loading ...</section>
+
+    <section id="infoBox" class="infoBox">Info</section>
+
+    <section id="errorBox" class="errorBox">Error</section>
+</div>
 <div id="wrapper">
 
 </div>
