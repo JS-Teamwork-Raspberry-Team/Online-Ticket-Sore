@@ -40,10 +40,15 @@ let auth = (() => {
         sessionStorage.setItem('authtoken', authtoken);
     }
 
+    function handleError(reason) {
+        utils.showError(reason.responseJSON.description);
+    }
+
     return {
         login,
         register,
         logout,
-        saveSession
+        saveSession,
+        handleError
     }
 })();

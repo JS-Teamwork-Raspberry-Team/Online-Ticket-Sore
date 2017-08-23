@@ -1,0 +1,73 @@
+<form action="#/add-event" method="post">
+    <div class="container">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control form-control-warning"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control form-control-warning"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control form-control-warning" placeholder="dd/mm/yyyy"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-8">
+                <select class="form-control">
+                    <option value="Music">Music</option>
+                    <option value="Cinema">Cinema</option>
+                    <option value="Theather">Theather</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Attractions">Attractions</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-8">
+                <input id="mapsearch" type="text" class="form-control form-control-warning" placeholder="Search..."/>
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="form-group row" >
+            <label class="col-sm-2 col-form-label">Main image</label>
+            <div class="col-sm-8">
+                <label class="custom-file col-form-label">
+                    <input type="file" class="custom-file-input" id="file" name="file" placeholder="Избери файл"/>
+                    <span class="custom-file-control"></span>
+                </label>
+            </div>
+        </div>
+
+        <div id="images" class="form-group row">
+            <label class="col-sm-2 col-form-label">Extra images</label>
+            <div class="col-sm-8">
+                <label class="custom-file col-form-label">
+                    <input type="file" class="custom-file-input" id="files" name="files[]" multiple/>
+                    <span class="custom-file-control"></span>
+                </label>
+            </div>
+        </div>
+
+        <div id="submitBtn" class="form-group row">
+            <div class="col-sm-2 offset-2">
+                <button type="submit" class="btn btn-success">Запази</button>
+            </div>
+        </div>
+    </div>
+</form>

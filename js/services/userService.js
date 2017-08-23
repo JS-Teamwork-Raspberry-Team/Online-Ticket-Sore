@@ -7,31 +7,55 @@ let userService = (() => {
         let repeatPass = context.params.repeatPassword;
 
         if (!utils.validateUsername(username)) {
-            auth.showError('Username should be at least 3 symbols long.');
+            utils.showError('Username should be at least 3 symbols long.');
             return;
         }
 
         if (!utils.validatePassword(password)) {
-            utils.handleError('Password should be at least 6 symbols long.');
+            utils.showError('Password should be at least 6 symbols long.');
             return;
         }
 
         if (password !== repeatPass) {
-            utils.handleError('Passwords should match.');
+            utils.showError('Passwords should match.');
             return;
         }
 
         auth.register(username, password, email)
             .then(function (userInfo) {
                 auth.saveSession(userInfo);
-                auth.showInfo('User registration successful.');
+                utils.showInfo('User registration successful.');
 
                 // displayCatalog(context);
-                ctx.redirect('#/home');
-            }).catch(utils.handleError)
+                context.redirect('#/home');
+            }).catch(auth.handleError)
+    }
+
+    function loginUser(context) {
+        let username = context.params.username;
+        let password = context.params.password;
+
+        if(!utils.validateUsername(username)){
+            utils.showError('Username should be at least 3 symbols long.');
+            return;
+        }
+
+        if(!utils.validatePassword(password)){
+            utils.showError('Password should be at least 6 symbols long.');
+            return;
+        }
+
+        auth.login(username, password)
+            .then(function (userInfo) {
+                auth.saveSession(userInfo);
+                auth.showInfo('Login successful.');
+
+                context.redirect('#/home');
+            }).catch(auth.handleError);
     }
 
     return {
-        registerUser
+        registerUser,
+        loginUser
     }
 })();

@@ -1,16 +1,20 @@
-<section class="jumbotron text-center" style="margin-left:100px;margin-right: 100px;margin-top: 20px">
+<section class="jumbotron" style="margin: 20px 0">
     <div class="container">
-        <h1 class="jumbotron-heading">History of your ordered events</h1>
-        <div class="btn btn-group">
-            <div class="dropdown">
-                <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="admin-filter/vanues">Venues</a>
-                    <a class="dropdown-item" href="admin-filter/events">Events</a>
-                    <a class="dropdown-item" href="admin-filter/upcoming">Upcoming</a>
-                    <a class="dropdown-item" href="admin-filter/finished">Finished</a>
-                </div>
-            </div>
+        <h1 class="jumbotron-heading">Admin panel</h1>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Filter
+                <span class="caret"></span>
+            </button>
+            <a class="btn btn-success" href="#/add-event">Add event &nbsp;+</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#/admin-filter/venues">Venues</a>
+                <li><a href="#/admin-filter/events">Events</a>
+                <li><a href="#/admin-filter/upcoming">Upcoming</a>
+                <li><a href="#/admin-filter/finished">Finished</a>
+            </ul>
         </div>
+
     </div>
 </section>
