@@ -1,4 +1,4 @@
-<form action="#/add-event" method="post">
+<form enctype="multipart/form-data" action="#/add-event" method="post">
     <div class="container">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
@@ -35,7 +35,7 @@
             <label class="col-sm-2 col-form-label">Address</label>
             <div class="col-sm-8">
                 <input id="mapsearch" type="text" class="form-control form-control-warning" placeholder="Search..."/>
-                <div id="map-canvas"></div>
+                <div id="map-canvas" style="width: inherit"></div>
             </div>
         </div>
         <div class="form-group row">
@@ -44,7 +44,7 @@
                 <textarea class="form-control" rows="3"></textarea>
             </div>
         </div>
-        <div class="form-group row" >
+        <div class="form-group row">
             <label class="col-sm-2 col-form-label">Main image</label>
             <div class="col-sm-8">
                 <label class="custom-file col-form-label">
@@ -71,3 +71,73 @@
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+    function initMap() {
+        //init map
+        let map = new google.maps.Map(document.getElementById("map-canvas"), {
+            center: {
+                lat: 42.7339,
+                lng: 25.4858
+            },
+            zoom: 8
+        });
+
+        $('#map-canvas').height(300);
+
+        $('#mapsearch').on("keypress", function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+            }
+        });
+
+//set marker on the map
+        let marker = new google.maps.Marker({
+            position: {
+                lat: 42.7339,
+                lng: 25.4858
+            },
+            map:map,
+            draggable: true
+        });
+
+// handle autocomplete in search input
+        let searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+
+// set event for dragging marker by the user and set the lat and lng from new marker location
+        let lat;
+        let lng;
+        google.maps.event.addListener(searchBox, 'places_changed', function () {
+            let places = searchBox.getPlaces();
+            let bounds = new google.maps.LatLngBounds();
+
+            let i, place;
+            for(i = 0; place = places[i]; i++) {
+                bounds.extend(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+            }
+
+            lat = marker.getPosition().lat();
+            lng = marker.getPosition().lng();
+
+            $('#lat').val(lat);
+            $('#lng').val(lng);
+
+            map.fitBounds(bounds);
+            map.setZoom(12);
+        });
+
+// set into the html field the new lat and lng after marker is dragged
+        google.maps.event.addListener(marker, 'dragend', function () {
+            lat = marker.getPosition().lat();
+            lng = marker.getPosition().lng();
+
+            $('#lat').val(lat);
+            $('#lng').val(lng);
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsP-OEcnl9pVkA4uhDOh_FS2y7m92K8Us&libraries=places&callback=initMap"
+        async defer></script>
+<script src="../js/models/add-event.js"></script>
+

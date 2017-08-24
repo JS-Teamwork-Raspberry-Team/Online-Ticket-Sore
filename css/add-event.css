@@ -1,0 +1,44 @@
+input[type="file"] {
+    display: block;
+}
+
+.mainImg {
+    width: 250px;
+    height: 150px;
+    border: 2px solid;
+    padding: 1px;
+    cursor: pointer;
+    margin: 0px 2px;
+}
+.imageThumb {
+    height: 90px;
+    width: 140px;
+    border: 2px solid;
+    padding: 1px;
+    cursor: pointer;
+    margin: 0px 2px;
+}
+#images {
+    margin-top: 40px;
+}
+.pip {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+}
+.remove {
+    display: block;
+    background: #444;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+.remove:hover {
+    background: white;
+    color: black;
+}
+
+#submitBtn {
+    margin-top: 10px;
+    margin-bottom: 100px;
+}

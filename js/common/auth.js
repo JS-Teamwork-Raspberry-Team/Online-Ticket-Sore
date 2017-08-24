@@ -15,7 +15,7 @@ let auth = (() => {
             username,
             password,
             email,
-            basket: []
+            basket: {}
         };
 
         return requester.post('user', '', 'basic', userData);
