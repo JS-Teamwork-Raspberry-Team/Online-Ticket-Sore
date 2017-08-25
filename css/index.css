@@ -4,15 +4,17 @@
     text-align: center;
     padding: 15px;
     transition: .5s ease-in;
-    display: none;
 }
 
 #loadingBox {
     background: #7CB3E9;
+    display: none;
 }
 #infoBox {
     background: #393;
+    display: none;
 }
 #errorBox {
     background: #F50;
+    display: none;
 }

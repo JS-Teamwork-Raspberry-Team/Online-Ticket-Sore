@@ -34,7 +34,7 @@ $(() => {
                     sessionStorage.clear();
                     utils.showInfo('Logout successful.');
 
-                    displayHome(context);
+                    context.redirect('#/home');
                 }).catch(auth.handleError);
         });
 

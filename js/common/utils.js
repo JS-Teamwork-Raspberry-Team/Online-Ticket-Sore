@@ -15,19 +15,71 @@ let utils = (() => {
     }
 
     function validateUsername(username) {
-        let usernameRegex = '/^[\w-]{3,}$/';
-        return username.match(usernameRegex)
+        return /^[\w\-]{3,10}(\s?[\w\-]{1,10})?$/.test(username);
     }
 
     function validatePassword(password) {
-        let passRegex = '/^[a-zA-Z0-9!@#$%\^&\*\)\(+=\._-]{6,}$/';
-        return password.match(passRegex);
+        return /^[a-zA-Z0-9!@#$%\^&\*\)\(+=\._-]{6,}$/.test(password);
+    }
+
+    function validateEmail(email) {
+        return /^[^<>()\[\]\.,;:\s@\"+\.[^<>()\[\]\.,;:\s@\"]+@[^<>()[\]\.,;:\s@\"]+\.+[^<>()[\]\.,;:\s@\"]{2,4}$/i.test(email);
+    }
+
+    function convertImageToByteArray(image) {
+        let fileData = new Blob([image]);
+        let promise = new Promise(getBuffer);
+        promise.then(function(data) {
+            return data;
+        }).catch(function(err) {
+            utils.showError(err);
+        });
+        /*
+         Create a function which will be passed to the promise
+         and resolve it when FileReader has finished loading the file.
+         */
+        function getBuffer(resolve) {
+            let reader = new FileReader();
+            reader.readAsArrayBuffer(fileData);
+            reader.onload = function() {
+                let arrayBuffer = reader.result
+                let bytes = new Uint8Array(arrayBuffer);
+                resolve(bytes);
+            }
+        }
+    }
+    
+       function displayImageFromByteArrayToHtml(selector, byteArray) {
+           document.getElementById(selector).src = "data:image/png;base64," + byteArray;
+       }
+
+    function displayHome(context) {
+        let events = [
+            { eventId: 1, title: 'Hawaii Party', description: 'Come to our party and have fun! We love you <3 '},
+            { eventId: 2, title: 'Chris Brown Concert at Sofia, Bulgaria', description: 'Do you love Chris Brown? Come to see him.'},
+            { eventId: 3, title: 'Art fest at the zoo', description: 'Dogs, elephants, donkeys, monkeys and others are going to have a fest.'}
+        ];
+
+        context.lastEvents = events;
+        context.topEvents = events;
+        context.username = sessionStorage.getItem('username');
+
+        context.loadPartials({
+            header: '../html/common/header.hbs',
+            footer: '../html/common/footer.hbs',
+            event: '../html/home/event.hbs'
+        }).then(function () {
+            this.partial('../html/home/homePage.hbs');
+        });
     }
 
     return {
         showInfo,
         showError,
         validateUsername,
-        validatePassword
+        validatePassword,
+        validateEmail,
+        displayHome,
+        convertImageToByteArray
     }
 })();

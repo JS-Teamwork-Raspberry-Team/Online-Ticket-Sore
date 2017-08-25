@@ -11,6 +11,11 @@ let userService = (() => {
             return;
         }
 
+        if (!utils.validateEmail(email)) {
+            utils.showError('Invalid email.');
+            return;
+        }
+
         if (!utils.validatePassword(password)) {
             utils.showError('Password should be at least 6 symbols long.');
             return;
@@ -26,7 +31,6 @@ let userService = (() => {
                 auth.saveSession(userInfo);
                 utils.showInfo('User registration successful.');
 
-                // displayCatalog(context);
                 context.redirect('#/home');
             }).catch(auth.handleError)
     }
@@ -41,6 +45,7 @@ let userService = (() => {
         }
 
         if(!utils.validatePassword(password)){
+            console.log(context)
             utils.showError('Password should be at least 6 symbols long.');
             return;
         }
@@ -48,9 +53,9 @@ let userService = (() => {
         auth.login(username, password)
             .then(function (userInfo) {
                 auth.saveSession(userInfo);
-                auth.showInfo('Login successful.');
+                utils.showInfo('Login successful.');
 
-                context.redirect('#/home');
+                utils.displayHome(context);
             }).catch(auth.handleError);
     }
 

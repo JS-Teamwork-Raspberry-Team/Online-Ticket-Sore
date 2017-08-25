@@ -6,7 +6,7 @@ $(document).ready(function() {
             reader.onload = function (e) {
                 let file = e.target;
                 $("<span class=\"pip\">" +
-                    "<img class=\"mainImg\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<img id=\"mainImg\"name=\"mainImg\" class=\"mainImg\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                     "<span class=\"remove\">Delete</span>" +
                     "</span>").insertAfter("#file");
                 $(".remove").click(function(){

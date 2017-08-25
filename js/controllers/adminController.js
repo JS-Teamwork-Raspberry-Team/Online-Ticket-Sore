@@ -21,7 +21,11 @@ $(() => {
             }).then(function () {
                 this.partial('../html/event/addEventPage.hbs')
             })
-        })
+        });
+
+        this.post('#/add-event', function (context) {
+            eventService.registerEvent(context)
+        });
 
     }).run()
 });
