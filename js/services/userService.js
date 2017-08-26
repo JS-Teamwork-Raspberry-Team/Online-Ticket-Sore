@@ -45,7 +45,6 @@ let userService = (() => {
         }
 
         if(!utils.validatePassword(password)){
-            console.log(context)
             utils.showError('Password should be at least 6 symbols long.');
             return;
         }

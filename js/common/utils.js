@@ -26,6 +26,16 @@ let utils = (() => {
         return /^[^<>()\[\]\.,;:\s@\"+\.[^<>()\[\]\.,;:\s@\"]+@[^<>()[\]\.,;:\s@\"]+\.+[^<>()[\]\.,;:\s@\"]{2,4}$/i.test(email);
     }
 
+    function encodeImageFileAsURL(byteArray) {
+        var binary = '';
+        var bytes = new Uint8Array( byteArray );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        return window.btoa( binary );
+    }
+
     function convertImageToByteArray(image) {
         let fileData = new Blob([image]);
         let promise = new Promise(getBuffer);
@@ -42,16 +52,13 @@ let utils = (() => {
             let reader = new FileReader();
             reader.readAsArrayBuffer(fileData);
             reader.onload = function() {
-                let arrayBuffer = reader.result
+                let arrayBuffer = reader.result;
                 let bytes = new Uint8Array(arrayBuffer);
                 resolve(bytes);
             }
         }
     }
-    
-       function displayImageFromByteArrayToHtml(selector, byteArray) {
-           document.getElementById(selector).src = "data:image/png;base64," + byteArray;
-       }
+
 
     function displayHome(context) {
         let events = [
@@ -80,6 +87,7 @@ let utils = (() => {
         validatePassword,
         validateEmail,
         displayHome,
-        convertImageToByteArray
+        convertImageToByteArray,
+        encodeImageFileAsURL
     }
 })();
