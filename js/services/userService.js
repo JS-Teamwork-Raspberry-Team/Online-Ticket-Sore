@@ -5,6 +5,7 @@ let userService = (() => {
         let email = context.params.email;
         let password = context.params.password;
         let repeatPass = context.params.repeatPassword;
+        auth.getUser(context);
 
         if (!utils.validateUsername(username)) {
             utils.showError('Username should be at least 3 symbols long.');
@@ -31,7 +32,7 @@ let userService = (() => {
                 auth.saveSession(userInfo);
                 utils.showInfo('User registration successful.');
 
-                context.redirect('#/home');
+                utils.displayHome(context);
             }).catch(auth.handleError)
     }
 
@@ -53,7 +54,6 @@ let userService = (() => {
             .then(function (userInfo) {
                 auth.saveSession(userInfo);
                 utils.showInfo('Login successful.');
-
                 utils.displayHome(context);
             }).catch(auth.handleError);
     }

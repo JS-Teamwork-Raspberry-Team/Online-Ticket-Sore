@@ -21,17 +21,16 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                {{#  if username}}
+                {{#if username}}
                     <li><a href="#" disabled="true" style="font-size: 130%">Hello, {{username}}</a></li>
                     <li><a href="#/logout">Logout</a></li>
-                    <!--{{#if isAdmin}}-->
-                        <!--<li><a href="#/admin">Admin</a></li>-->
-                    <!--{{/if}}-->
+                    {{#if isAdmin}}
+                        <li><a href="#/admin">Admin</a></li>
+                    {{/if}}
                 {{else}}
                     <li><a href="#/login">Log in</a></li>
                     <li><a href="#/register">Register</a></li>
                 {{/if}}
-                <li><a href="#/admin">Admin</a></li>
             </ul>
         </div>
     </div>

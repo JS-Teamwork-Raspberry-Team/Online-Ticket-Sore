@@ -14,8 +14,6 @@ $(() => {
         this.post('#/register', userService.registerUser);
 
         this.get('#/login', function (context) {
-            context.username = sessionStorage.getItem('username');
-
             context.loadPartials({
                 header: '../html/common/header.hbs',
                 footer: '../html/common/footer.hbs',

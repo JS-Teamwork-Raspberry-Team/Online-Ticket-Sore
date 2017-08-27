@@ -18,5 +18,7 @@ $(() => {
             eventService.registerEvent(context)
         });
 
+        this.get('#/delete/:id', eventService.deleteEvent)
+
     }).run()
 });

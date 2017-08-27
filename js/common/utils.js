@@ -15,7 +15,7 @@ let utils = (() => {
     }
 
     function validateUsername(username) {
-        return /^[\w\-]{3,10}(\s?[\w\-]{1,10})?$/.test(username);
+        return /^[\w\-]{3,10}(\s?[\w\-]{1,10})$/.test(username);
     }
 
     function validatePassword(password) {
@@ -26,40 +26,6 @@ let utils = (() => {
         return /^[^<>()\[\]\.,;:\s@\"+\.[^<>()\[\]\.,;:\s@\"]+@[^<>()[\]\.,;:\s@\"]+\.+[^<>()[\]\.,;:\s@\"]{2,4}$/i.test(email);
     }
 
-    function encodeImageFileAsURL(byteArray) {
-        var binary = '';
-        var bytes = new Uint8Array( byteArray );
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
-        }
-        return window.btoa( binary );
-    }
-
-    function convertImageToByteArray(image) {
-        let fileData = new Blob([image]);
-        let promise = new Promise(getBuffer);
-        promise.then(function(data) {
-            return data;
-        }).catch(function(err) {
-            utils.showError(err);
-        });
-        /*
-         Create a function which will be passed to the promise
-         and resolve it when FileReader has finished loading the file.
-         */
-        function getBuffer(resolve) {
-            let reader = new FileReader();
-            reader.readAsArrayBuffer(fileData);
-            reader.onload = function() {
-                let arrayBuffer = reader.result;
-                let bytes = new Uint8Array(arrayBuffer);
-                resolve(bytes);
-            }
-        }
-    }
-
-
     function displayHome(context) {
         let events = [
             { eventId: 1, title: 'Hawaii Party', description: 'Come to our party and have fun! We love you <3 '},
@@ -69,7 +35,7 @@ let utils = (() => {
 
         context.lastEvents = events;
         context.topEvents = events;
-        context.username = sessionStorage.getItem('username');
+        auth.getUser(context);
 
         context.loadPartials({
             header: '../html/common/header.hbs',
@@ -80,6 +46,28 @@ let utils = (() => {
         });
     }
 
+    function validateEventData(data) {
+        if (!/^[\w\-\s?]{5,30}$/.test(data.name)) {
+            utils.showError('Invalid event name. It must be at least 5 symbols long and contains only one space between words.')
+            return;
+        }
+
+        if (data.price === '' || isNaN(data.price)) {
+            utils.showError('Invalid price for event.');
+            return;
+        }
+
+        if (data.date === '') {
+            utils.showError('You did not specify the date of the event.');
+            return;
+        }
+
+        if (!/^[\w]{1,}.*$/.test(data.description)) {
+            utils.showError('The description cannot start with empty space.');
+            return;
+        }
+    }
+
     return {
         showInfo,
         showError,
@@ -87,7 +75,6 @@ let utils = (() => {
         validatePassword,
         validateEmail,
         displayHome,
-        convertImageToByteArray,
-        encodeImageFileAsURL
+        validateEventData
     }
 })();

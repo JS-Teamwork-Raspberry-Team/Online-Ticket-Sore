@@ -15,6 +15,7 @@ let auth = (() => {
             username,
             password,
             email,
+            isAdmin: '',
             basket: {}
         };
 
@@ -34,10 +35,17 @@ let auth = (() => {
         let id = userInfo['_id'];
         let username = userInfo['username'];
         let authtoken = userInfo['_kmd']['authtoken'];
+        let isAdmin = userInfo['isAdmin'];
 
         sessionStorage.setItem('id', id);
         sessionStorage.setItem('username', username);
         sessionStorage.setItem('authtoken', authtoken);
+        sessionStorage.setItem('isAdmin', isAdmin);
+    }
+
+    function getUser(context) {
+        context.username = sessionStorage.getItem('username');
+        context.isAdmin = sessionStorage.getItem('isAdmin') !== '';
     }
 
     function handleError(reason) {
@@ -49,6 +57,7 @@ let auth = (() => {
         register,
         logout,
         saveSession,
+        getUser,
         handleError
     }
 })();
