@@ -1,27 +1,28 @@
-<form enctype="multipart/form-data" action="#/add-event" method="post">
+<form enctype="multipart/form-data" action="#/edit" method="post">
     <div class="container">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control form-control-warning" name="name"/>
+                <input type="text" class="form-control form-control-warning" value="{{name}}" name="name"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Price</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control form-control-warning" name="price"/>
+                <input type="text" class="form-control form-control-warning" value="{{price}}" name="price"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Date</label>
             <div class="col-sm-8">
-                <input type="datetime-local" class="form-control form-control-warning" placeholder="dd/mm/yyyy" name="date"/>
+                <input type="datetime-local" class="form-control form-control-warning" value="{{date}}" name="date"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-8">
                 <select class="form-control" name="category">
+                    <option value="{{category}}">{{category}}</option>
                     <option value="Music">Music</option>
                     <option value="Cinema">Cinema</option>
                     <option value="Theather">Theather</option>
@@ -34,16 +35,16 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Address</label>
             <div class="col-sm-8">
-                <input id="mapsearch" type="text" class="form-control form-control-warning" placeholder="Search..." name="locationName"/>
+                <input id="mapsearch" type="text" class="form-control form-control-warning" value="{{locationName}}" name="locationName"/>
                 <div id="map-canvas" style="width: inherit"></div>
-                <input type="hidden" id="lat" name="latitude"/>
-                <input type="hidden" id="lng" name="longitude"/>
+                <input type="hidden" id="lat" value="{{latitude}}" name="latitude"/>
+                <input type="hidden" id="lng" value="{{longitude}}" name="longitude"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Description</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="3" name="description"></textarea>
+                <textarea class="form-control" rows="3" name="description">{{description}}</textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -57,13 +58,13 @@
         </div>
 
         <!--<div id="images" class="form-group row">-->
-            <!--<label class="col-sm-2 col-form-label">Extra images</label>-->
-            <!--<div class="col-sm-8">-->
-                <!--<label class="custom-file col-form-label">-->
-                    <!--<input type="file" class="custom-file-input" id="files" name="files[]" multiple/>-->
-                    <!--<span class="custom-file-control"></span>-->
-                <!--</label>-->
-            <!--</div>-->
+        <!--<label class="col-sm-2 col-form-label">Extra images</label>-->
+        <!--<div class="col-sm-8">-->
+        <!--<label class="custom-file col-form-label">-->
+        <!--<input type="file" class="custom-file-input" id="files" name="files[]" multiple/>-->
+        <!--<span class="custom-file-control"></span>-->
+        <!--</label>-->
+        <!--</div>-->
         <!--</div>-->
 
         <div id="submitBtn" class="form-group row">
@@ -96,8 +97,8 @@
 //set marker on the map
         let marker = new google.maps.Marker({
             position: {
-                lat: 42.7339,
-                lng: 25.4858
+                lat: Number($('#lat').val()),
+                lng: Number($('#lng').val())
             },
             map:map,
             draggable: true

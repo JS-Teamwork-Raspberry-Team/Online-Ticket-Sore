@@ -2,7 +2,9 @@ $(() => {
     Sammy('#wrapper', function () {
         this.use('Handlebars', 'hbs');
 
-        this.get('#/admin', eventService.loadEvents);
+        this.get('#/admin', function (context) {
+            eventService.loadEvents(context, 'events')
+        });
         
         this.get('#/add-event', function () {
             this.loadPartials({
@@ -14,11 +16,28 @@ $(() => {
             })
         });
 
-        this.post('#/add-event', function (context) {
-            eventService.registerEvent(context)
+        this.post('#/add-event', eventService.registerEvent);
+
+        this.get('#/edit/:id', eventService.getEditEventPage);
+
+        this.post('#/edit', eventService.editEvent);
+
+        this.del('#/delete/:id', eventService.deleteEvent);
+        
+        this.get('#/admin-filter/venues', function (context) {
+            eventService.loadEvents(context, 'venues');
         });
 
-        this.get('#/delete/:id', eventService.deleteEvent)
+        this.get('#/admin-filter/events', function (context) {
+            eventService.loadEvents(context, 'events');
+        });
 
+        this.get('#/admin-filter/upcoming', function (context) {
+            eventService.loadEvents(context, 'upcoming');
+        });
+
+        this.get('#/admin-filter/finished', function (context) {
+            eventService.loadEvents(context, 'finished');
+        });
     }).run()
 });
