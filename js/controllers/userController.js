@@ -22,7 +22,6 @@ $(() => {
                 this.partial('../html/login/loginPage.hbs');
             });
         });
-
         this.post('#/login', userService.loginUser);
 
         // LOGOUT
@@ -35,6 +34,5 @@ $(() => {
                     context.redirect('#/home');
                 }).catch(auth.handleError);
         });
-
     }).run();
 });

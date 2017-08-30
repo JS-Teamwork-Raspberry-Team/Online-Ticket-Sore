@@ -41,7 +41,8 @@ let eventService = (() => {
                 case 'finished': filteredEvents = events.filter(e => currentDate > new Date(e)); break;
                 default: break;
             }
-            
+
+            auth.getUser(context);
             context.events = filteredEvents;
             context.loadPartials({
                 header: '../html/common/header.hbs',
@@ -81,6 +82,28 @@ let eventService = (() => {
                 editEventForm: '../html/event/editEventForm.hbs'
             }).then(function () {
                 this.partial('../html/event/editEventPage.hbs');
+            });
+        })
+    }
+
+    function getShowEventPage(context) {
+        let eventId = context.params.id.substring(1);
+        sessionStorage.setItem('eventId', eventId);
+        eventService.getEventById(eventId).then(function (event) {
+            context.name = event.name;
+            //context.price = event.price;
+            //context.date = event.date.toString().replace(' ', 'T');
+            //context.category = event.category;
+            //context.locationName = event.locationName;
+            //context.latitude = event.latitude;
+            //context.longitude = event.longitude;
+            context.description = event.description;
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                showEventForm: '../html/event/showEventForm.hbs'
+            }).then(function () {
+                this.partial('../html/event/showEventPage.hbs');
             });
         })
     }
@@ -130,6 +153,7 @@ let eventService = (() => {
         loadEvents,
         getEventById,
         getEditEventPage,
+        getShowEventPage,
         editEvent,
         deleteEvent
     }
