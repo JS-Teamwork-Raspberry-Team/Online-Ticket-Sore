@@ -48,24 +48,31 @@ let utils = (() => {
 
     function validateEventData(data) {
         if (!/^[\w\-\s?]{5,30}$/.test(data.name)) {
-            utils.showError('Invalid event name. It must be at least 5 symbols long and contains only one space between words.')
-            return;
+            utils.showError('Invalid event name. It must be at least 5 symbols long and contains only one space between words.');
+            return false;
         }
 
         if (data.price === '' || isNaN(data.price)) {
             utils.showError('Invalid price for event.');
-            return;
+            return false;
         }
 
-        if (data.date === '') {
+        if (data.date === '' || data.date === undefined) {
             utils.showError('You did not specify the date of the event.');
-            return;
+            return false;
+        }
+
+        if (data.date < new Date().toISOString().split('T')[0]) {
+            utils.showError('You can not create an event from the past.');
+            return false;
         }
 
         if (!/^[\w]{1,}.*$/.test(data.description)) {
             utils.showError('The description cannot start with empty space.');
-            return;
+            return false;
         }
+
+        return true;
     }
 
     return {

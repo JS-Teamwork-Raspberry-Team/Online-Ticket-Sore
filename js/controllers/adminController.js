@@ -22,7 +22,7 @@ $(() => {
 
         this.post('#/edit', eventService.editEvent);
 
-        this.del('#/delete/:id', eventService.deleteEvent);
+        this.get('#/delete/:id', eventService.deleteEvent);
         
         this.get('#/admin-filter/venues', function (context) {
             eventService.loadEvents(context, 'venues');

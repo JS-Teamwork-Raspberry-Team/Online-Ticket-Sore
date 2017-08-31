@@ -12,7 +12,7 @@ let eventService = (() => {
             let eventData = {
                 name: name,
                 price: price,
-                date: date.toString().replace('T', ' '),
+                date: date,
                 category: category,
                 locationName: locationName,
                 latitude: latitude,
@@ -21,7 +21,9 @@ let eventService = (() => {
                 image: reader.result
             };
 
-            utils.validateEventData(eventData);
+            if(!utils.validateEventData(eventData)) {
+                return;
+            }
             requester.post('appdata', 'events', 'kinvey', eventData).then(function (eventInfo) {
                 utils.showInfo('Event is registered successfully.');
                 context.redirect('#/admin');
@@ -33,15 +35,15 @@ let eventService = (() => {
     function loadEvents(context, filter) {
         requester.get('appdata', 'events').then(function (events) {
             let filteredEvents = [];
-            let currentDate = new Date();
+            let currentDate = new Date().toISOString().split('T')[0];
             switch (filter) {
                 case 'events': filteredEvents = events; break;
                 case 'venues': filteredEvents = events; break;
-                case 'upcoming': filteredEvents = events.filter(e => currentDate < new Date(e)); break;
-                case 'finished': filteredEvents = events.filter(e => currentDate > new Date(e)); break;
+                case 'upcoming': filteredEvents = events.filter(e => e.date > currentDate); break;
+                case 'finished': filteredEvents = events.filter(e => e.date < currentDate); break;
                 default: break;
             }
-            
+
             context.events = filteredEvents;
             context.loadPartials({
                 header: '../html/common/header.hbs',
@@ -59,7 +61,7 @@ let eventService = (() => {
         let eventId = context.params.id;
         eventId = eventId.substring(1);
         requester.remove('appdata', 'events/' + eventId, 'kinvey').then(function () {
-            loadEvents(context);
+            loadEvents(context, 'events');
         }).catch(auth.handleError);
     }
 
