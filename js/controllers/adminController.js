@@ -6,7 +6,9 @@ $(() => {
             eventService.loadEvents(context, 'events')
         });
         
-        this.get('#/add-event', function () {
+        this.get('#/add-event', function (context) {
+            auth.getUser(context);
+
             this.loadPartials({
                 header: '../html/common/header.hbs',
                 footer: '../html/common/footer.hbs',
@@ -19,6 +21,8 @@ $(() => {
         this.post('#/add-event', eventService.registerEvent);
 
         this.get('#/edit/:id', eventService.getEditEventPage);
+
+        this.get('#/show/:id', eventService.getShowEventPage);
 
         this.post('#/edit', eventService.editEvent);
 
