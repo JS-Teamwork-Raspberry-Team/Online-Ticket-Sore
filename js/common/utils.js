@@ -62,11 +62,6 @@ let utils = (() => {
             return false;
         }
 
-        if (data.date < new Date().toISOString().split('T')[0]) {
-            utils.showError('You can not create an event from the past.');
-            return false;
-        }
-
         if (!/^[\w]{1,}.*$/.test(data.description)) {
             utils.showError('The description cannot start with empty space.');
             return false;

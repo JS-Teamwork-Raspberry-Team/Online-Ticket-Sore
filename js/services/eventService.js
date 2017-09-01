@@ -12,7 +12,7 @@ let eventService = (() => {
             let eventData = {
                 name: name,
                 price: price,
-                date: date,
+                date: date.toLocaleString('en-US'),
                 category: category,
                 locationName: locationName,
                 latitude: latitude,
@@ -91,13 +91,13 @@ let eventService = (() => {
         let eventId = context.params.id.substring(1);
         sessionStorage.setItem('eventId', eventId);
         eventService.getEventById(eventId).then(function (event) {
+            context.evenId = eventId;
             context.name = event.name;
-            //context.price = event.price;
-            //context.date = event.date.toString().replace(' ', 'T');
-            //context.category = event.category;
-            //context.locationName = event.locationName;
-            //context.latitude = event.latitude;
-            //context.longitude = event.longitude;
+            context.image = event.image;
+            context.price = event.price;
+            context.date = event.date.toString().replace(' ', 'T');
+            context.category = event.category;
+            context.locationName = event.locationName;
             context.description = event.description;
             context.loadPartials({
                 header: '../html/common/header.hbs',
@@ -149,6 +149,87 @@ let eventService = (() => {
         return requester.get('appdata', 'events/' + id, 'kinvey');
     }
 
+    function getBuyTicketPage (context) {
+        let eventId = context.params.eventId.substring(1);
+        getEventById(eventId).then(function (event) {
+            context.eventId = eventId;
+            context.price = event.price;
+
+            auth.getUser(context);
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                buyTicketForm: '../html/ticket/buyTicketForm.hbs'
+            }).then(function () {
+                this.partial('../html/ticket/buyTicketPage.hbs');
+            });
+        });
+
+        $("body").on('change', "#ticketsCount", calculateTotalPrice);
+        function calculateTotalPrice() {
+            let price = Number($('#eventPrice').text());
+            let quantity = Number($('#ticketsCount').val());
+            $('#totalPrice').val(price * quantity);
+        }
+    }
+
+    function buyTicket (context) {
+        let eventId = context.params.eventId.substring(1);
+        let ticketsCount = Number($('#ticketsCount').val());
+
+        if (ticketsCount < 1 || ticketsCount > 6){
+            utils.showError('You can purchase from 1 to 6 tickets.');
+        } else {
+            getEventById(eventId).then(function (event) {
+                let ticket = {
+                    user_id: sessionStorage.getItem('id'),
+                    event_id: eventId,
+                    tickets_count: ticketsCount,
+                    purchase_date: new Date().toLocaleString('en-US'),
+                    is_purchased: false
+                };
+
+                requester.post('appdata', 'tickets', 'kinvey', ticket).then(function (ticketInfo) {
+                    auth.getUser(context);
+                    utils.showInfo(`${ticketsCount} tickets successfully purchased.`);
+                    context.redirect('#/home');
+                });
+            }).catch(auth.handleError);
+        }
+    }
+
+    function getBasketPage(context) {
+        getTicketsByUserId(false).then(function (tickets) {
+            let myTickets = [];
+            for (let ticket of tickets) {
+                getEventById(ticket.event_id).then(function (eventInfo) {
+                    myTickets.push({
+                        eventName: eventInfo.name,
+                        eventLocation: eventInfo.locationName,
+                        ticketPrice: eventInfo.price,
+                        ticketCount: ticket.tickets_count,
+                        total: Number(ticket.tickets_count) * Number(eventInfo.price)
+                    });
+                });
+            }
+
+            context.purchasedTickets = tickets;
+            auth.getUser(context);
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                myTickets: '../html/basket/basketItem.hbs'
+            }).then(function () {
+                this.partial('../html/basket/basketPage.hbs');
+            })
+        }).catch(auth.handleError)
+    }
+
+    function getTicketsByUserId(isPurchased) {
+        let user = sessionStorage.getItem('username');
+        return requester.get('appdata', 'tickets', 'kinvey', `?query={"user_id":"${user}", "is_purchased"="${isPurchased}"}&sort={"_kmd.ect": -1}`);
+    }
+
     return {
         registerEvent,
         loadEvents,
@@ -156,6 +237,9 @@ let eventService = (() => {
         getEditEventPage,
         getShowEventPage,
         editEvent,
-        deleteEvent
+        deleteEvent,
+        getBuyTicketPage,
+        buyTicket,
+        getBasketPage
     }
 })();

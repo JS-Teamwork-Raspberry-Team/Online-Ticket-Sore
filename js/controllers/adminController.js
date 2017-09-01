@@ -22,8 +22,6 @@ $(() => {
 
         this.get('#/edit/:id', eventService.getEditEventPage);
 
-        this.get('#/show/:id', eventService.getShowEventPage);
-
         this.post('#/edit', eventService.editEvent);
 
         this.get('#/delete/:id', eventService.deleteEvent);

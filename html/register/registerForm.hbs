@@ -3,7 +3,7 @@
 <form method="post" action="#/register">
     <div class="form-group-sm">
         <label for="username" class="control-label">Username</label>
-        <input id="username" type="text" class="form-control" name="username"/>
+        <input id="username" type="text" class="form-control" name="username" autofocus/>
     </div>
     <div class="form-group-sm">
         <label for="email" class="control-label">Email</label>
@@ -17,5 +17,7 @@
         <label for="repeatPassword" class="control-label">Repeat password</label>
         <input id="repeatPassword" type="password" class="form-control" name="repeatPassword"/>
     </div>
-    <input type="submit" class="btn btn-default" value="Register"/>
+    <div class="form-group-sm">
+        <input type="submit" class="btn btn-default" value="Register"/>
+    </div>
 </form>

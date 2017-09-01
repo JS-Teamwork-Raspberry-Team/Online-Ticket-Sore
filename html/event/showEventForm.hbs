@@ -1,4 +1,22 @@
-<h1>{{ name }}</h1>
-<div>
-    <p>{{ description }}</p>
+<div class="row">
+    <div class="col-md-5 col-lg-5 col-sm-5">
+        <img style="max-height: 300px; max-width: 450px;" class="img-rounded" src="{{ image }}" alt="Main image"/>
+    </div>
+    <div class="col-md-7 col-lg-7 col-sm-7">
+        <h2>{{ name }}, {{ locationName }} </h2>
+        <h4><i>{{ category }}</i></h4>>
+        <h4>Price {{ price }} lv.</h4>
+        <div>
+            <i class="glyphicon glyphicon-calendar"></i>Event date:&nbsp;{{ date }}
+        </div>
+        <div>
+            <p>{{ description }}</p>
+            <div>
+                <a href="#/purchase/:{{ evenId }}" class="btn btn-success">Buy ticket</a>
+            </div>
+        </div>
+        <div id="map-canvas">
+
+        </div>
+    </div>
 </div>
