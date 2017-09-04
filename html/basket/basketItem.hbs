@@ -1,0 +1,30 @@
+{{#if tickets}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Event</th>
+                <th>Location</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each purchasedTickets}}
+                <tr>
+                    <td>{{ inc @index }}</td>
+                    <td>{{ eventName }}</td>
+                    <td>{{ eventLocation }}</td>
+                    <td>{{ ticketPrice }}</td>
+                    <td>{{ ticketCount }}</td>
+                    <td>{{ total }}</td>
+                    <td><a href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{ else}}
+    <p>You have not purchased any tickets.</p>
+{{/if}}

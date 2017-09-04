@@ -1,0 +1,35 @@
+<h1 class="text-center">Register event</h1>
+<br>
+<form enctype="multipart/form-data" method="post" action="#/ticket/:{{ eventId }}">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ticket price</label>
+        <div class="col-sm-6"><span id="eventPrice">{{ price }}</span> lv.</div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ticket count</label>
+        <div class="col-sm-6">
+            <input id="ticketsCount" type="number" class="form-control" value="0" min="0" max="6"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Payment form</label>
+        <div class="col-sm-6">
+            <select class="form-control">
+                <option value="Cash">Cash</option>
+                <option value="Credit card">Credit card</option>
+                <option value="Debit card">Debit card</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Total amount</label>
+        <div class="col-sm-6">
+            <input id="totalPrice" type="number" class="form-control" disabled/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2 offset-2">
+            <input type="submit" class="btn btn-success" value="Buy"/>
+        </div>
+    </div>
+</form>
