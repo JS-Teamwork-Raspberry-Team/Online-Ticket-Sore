@@ -1,6 +1,6 @@
 let eventService = (() => {
     function registerEvent(context) {
-        let {name, price, date, category, locationName, latitude, longitude, description} = context.params;
+        let {name, price, ticketsCount, date, category, locationName, latitude, longitude, description} = context.params;
         let imageFile = document.getElementById('file').files[0];
         if (imageFile === undefined) {
             utils.showError('You must load an image for the event.');
@@ -12,6 +12,7 @@ let eventService = (() => {
             let eventData = {
                 name: name,
                 price: price,
+                ticketsCount: ticketsCount,
                 date: date.toLocaleString('en-US'),
                 category: category,
                 locationName: locationName,
@@ -71,6 +72,7 @@ let eventService = (() => {
         eventService.getEventById(eventId).then(function (event) {
             context.name = event.name;
             context.price = event.price;
+            context.ticketsCount = event.ticketsCount;
             context.date = event.date.toString().replace(' ', 'T');
             context.category = event.category;
             context.locationName = event.locationName;
@@ -112,7 +114,7 @@ let eventService = (() => {
     function editEvent(context) {
         let eventId = sessionStorage.getItem('eventId');
         eventService.getEventById(eventId).then(function (event) {
-            let {name, price, date, category, locationName, latitude, longitude, description} = context.params;
+            let {name, price, ticketsCount, date, category, locationName, latitude, longitude, description} = context.params;
             let imageFile = document.getElementById('file').files[0];
             let image;
             if (imageFile === undefined) {
@@ -128,6 +130,7 @@ let eventService = (() => {
             let newData = {
                 name: name,
                 price: price,
+                ticketsCount: ticketsCount,
                 date: date.toString().replace('T', ' '),
                 category: category,
                 locationName: locationName,

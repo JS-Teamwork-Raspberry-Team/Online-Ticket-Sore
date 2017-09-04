@@ -57,8 +57,18 @@ let utils = (() => {
             return false;
         }
 
+        if (data.ticketsCount === '' || isNaN(data.ticketsCount)) {
+            utils.showError('Invalid tickets count for event.');
+            return false;
+        }
+
         if (data.date === '' || data.date === undefined) {
             utils.showError('You did not specify the date of the event.');
+            return false;
+        }
+
+        if (data.date < new Date().toISOString().split('T')[0]) {
+            utils.showError('You cannot create an event from the past.');
             return false;
         }
 
