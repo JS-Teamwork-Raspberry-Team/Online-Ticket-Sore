@@ -34,5 +34,7 @@ $(() => {
                     context.redirect('#/home');
                 }).catch(auth.handleError);
         });
+
+        this.get('#/profile/:id', userService.getProfilePage);
     }).run();
 });

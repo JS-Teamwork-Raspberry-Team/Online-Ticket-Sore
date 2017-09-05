@@ -58,8 +58,27 @@ let userService = (() => {
             }).catch(auth.handleError);
     }
 
+    function getProfilePage(context) {
+        let userId = context.params.id.substr(1);
+        getUser(userId).then(function (userInfo) {
+            context.username = userInfo.username;
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                profile: '../html/profile/profile.hbs'
+            }).then(function () {
+                this.partial('../html/profile/profilePage.hbs');
+            });
+        }).catch(auth.handleError);
+    }
+
+    function getUser(userId) {
+        return requester.get('user', userId, 'kinvey');
+    }
+
     return {
         registerUser,
-        loginUser
+        loginUser,
+        getProfilePage
     }
 })();
