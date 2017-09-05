@@ -12,5 +12,9 @@ $(() => {
         this.post('#/ticket/:eventId', eventService.buyTicket);
 
         this.get('#/basket', eventService.getBasketPage);
+
+        this.get('#/removeTicket/:ticketId', eventService.removeTicket);
+
+        this.get('#/purchaseTickets', eventService.purchaseTickets);
     }).run()
 });

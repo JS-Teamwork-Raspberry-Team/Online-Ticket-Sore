@@ -204,33 +204,63 @@ let eventService = (() => {
     function getBasketPage(context) {
         getTicketsByUserId(false).then(function (tickets) {
             let myTickets = [];
+            auth.getUser(context);
             for (let ticket of tickets) {
                 getEventById(ticket.event_id).then(function (eventInfo) {
                     myTickets.push({
                         eventName: eventInfo.name,
                         eventLocation: eventInfo.locationName,
+                        ticketId: ticket._id,
                         ticketPrice: eventInfo.price,
                         ticketCount: ticket.tickets_count,
                         total: Number(ticket.tickets_count) * Number(eventInfo.price)
                     });
+
+                    context.tickets = myTickets;
+                    context.loadPartials({
+                        header: '../html/common/header.hbs',
+                        footer: '../html/common/footer.hbs',
+                        myTickets: '../html/basket/basketItem.hbs'
+                    }).then(function () {
+                        this.partial('../html/basket/basketPage.hbs');
+                    })
                 });
             }
-
-            context.purchasedTickets = tickets;
-            auth.getUser(context);
-            context.loadPartials({
-                header: '../html/common/header.hbs',
-                footer: '../html/common/footer.hbs',
-                myTickets: '../html/basket/basketItem.hbs'
-            }).then(function () {
-                this.partial('../html/basket/basketPage.hbs');
-            })
-        }).catch(auth.handleError)
+        }).catch(auth.handleError);
     }
 
     function getTicketsByUserId(isPurchased) {
         let user = sessionStorage.getItem('username');
         return requester.get('appdata', 'tickets', 'kinvey', `?query={"user_id":"${user}", "is_purchased"="${isPurchased}"}&sort={"_kmd.ect": -1}`);
+    }
+
+    function removeTicket(context) {
+        let ticketId = context.params.ticketId.substr(1);
+        removeTicketFromBasket(ticketId).then(function () {
+            utils.showInfo('Removed ticket');
+            getBasketPage(context);
+        }).catch(auth.handleError);
+    }
+
+    function removeTicketFromBasket(ticketId) {
+        return requester.remove('appdata', 'tickets/' + ticketId, 'kinvey');
+    }
+
+    function purchaseTickets(context) {
+        if (confirm('Do you want to purchase selected tickets?')) {
+            getTicketsByUserId(false).then(function (tickets) {
+                auth.getUser(context);
+                for (let ticket of tickets) {
+                    ticket.is_purchased = true;
+                    console.log(ticket);
+                    requester.update('appdata', 'tickets/' + ticket._id, 'kinvey', ticket)
+                        .catch(auth.handleError)
+                }
+
+                utils.showInfo('Successfully purchased tickets');
+                context.redirect('#/home');
+            }).catch(auth.handleError);
+        }
     }
 
     return {
@@ -243,6 +273,8 @@ let eventService = (() => {
         deleteEvent,
         getBuyTicketPage,
         buyTicket,
-        getBasketPage
+        getBasketPage,
+        removeTicket,
+        purchaseTickets
     }
 })();

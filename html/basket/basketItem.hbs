@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            {{#each purchasedTickets}}
+            {{#each tickets}}
                 <tr>
                     <td>{{ inc @index }}</td>
                     <td>{{ eventName }}</td>
@@ -20,7 +20,7 @@
                     <td>{{ ticketPrice }}</td>
                     <td>{{ ticketCount }}</td>
                     <td>{{ total }}</td>
-                    <td><a href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
+                    <td><a href="#/removeTicket/:{{ ticketId }}"><i class="glyphicon glyphicon-remove"></i></a></td>
                 </tr>
             {{/each}}
         </tbody>
