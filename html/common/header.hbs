@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default"  style="width: 1170px;">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -6,19 +6,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="index.html"><img src="#" alt="Online Ticket Store LOGO"></a>
+            <a href="#/index.html">
+                <img src="../images/favicon.png" alt="Online Ticket Store" style="text-decoration: none; max-width: 100px;">
+            </a>
         </div>
 
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="#/all-listings">All</a></li>
-                <li><a href="#">Music</a></li>
-                <li><a href="#">Cinema</a></li>
-                <li><a href="#">Theater</a></li>
-                <li><a href="#">Sport</a></li>
-                <li><a href="#">Attractions</a></li>
-                <li><a href="#">Other</a></li>
-            </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 {{#if username}}
@@ -30,6 +23,10 @@
                 {{else}}
                     <li><a href="#/login">Log in</a></li>
                     <li><a href="#/register">Register</a></li>
+                    <li><a href="#/basket">
+                        <img src=../images/basket.png alt="Basket" style="text-decoration: none; max-width: 30px;">
+                    </a>
+                    </li>
                 {{/if}}
             </ul>
         </div>
@@ -37,9 +34,21 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/basket">Basket</a></li>
-                <li><a href="#">Search</a></li>
+                <li><a href="#">
+                <input type="text" name="s" id="search-text" size="15" value="" Placeholder="Search" >
+                </a>
+                </li>
             </ul>
         </div>
     </div>
+    <ul class="nav navbar-nav categories">
+                <li><a href="#/all-listings">All</a></li>
+                <li><a href="#">Music</a></li>
+                <li><a href="#">Cinema</a></li>
+                <li><a href="#">Theater</a></li>
+                <li><a href="#">Sport</a></li>
+                <li><a href="#">Attractions</a></li>
+                <li><a href="#">Other</a></li>
+            </ul>
+
 </nav>
