@@ -44,11 +44,6 @@ let auth = (() => {
         let email = userInfo['email'];
         let basket = userInfo['basket'];
 
-        /*let firstName = userInfo['firstName'];
-        let middleName = userInfo['middleName'];
-        let lastName = userInfo['lastName'];
-        let address = userInfo['address'];
-        let phone = userInfo['phone'];*/
         let firstName = "";
         let middleName = "";
         let lastName = "";
