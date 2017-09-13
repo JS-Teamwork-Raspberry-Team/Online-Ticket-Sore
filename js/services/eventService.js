@@ -93,6 +93,7 @@ let eventService = (() => {
         let eventId = context.params.id.substring(1);
         sessionStorage.setItem('eventId', eventId);
         eventService.getEventById(eventId).then(function (event) {
+            let availableTickets = event.ticketsCount  === "0" ? 'No' : event.ticketsCount;
             context.evenId = eventId;
             context.name = event.name;
             context.image = event.image;
@@ -101,12 +102,17 @@ let eventService = (() => {
             context.category = event.category;
             context.locationName = event.locationName;
             context.description = event.description;
+            context.ticketsCount = availableTickets;
             context.loadPartials({
                 header: '../html/common/header.hbs',
                 footer: '../html/common/footer.hbs',
                 showEventForm: '../html/event/showEventForm.hbs'
             }).then(function () {
-                this.partial('../html/event/showEventPage.hbs');
+                this.partial('../html/event/showEventPage.hbs').then(function () {
+                    if (availableTickets === 'No') {
+                        $('#purchaseBtn').hide()
+                    }
+                });
             });
         })
     }
@@ -170,7 +176,10 @@ let eventService = (() => {
                 this.partial('../html/categories/categoryPage.hbs');
             })
         }).catch(auth.handleError);
+    }
 
+    function updateEvent(event) {
+        return requester.update('appdata', 'events/' + event._id, 'kinvey', event);
     }
 
     return {
@@ -181,6 +190,7 @@ let eventService = (() => {
         getShowEventPage,
         editEvent,
         deleteEvent,
-        getEventsByCategory
+        getEventsByCategory,
+        updateEvent
     }
 })();

@@ -40,19 +40,24 @@ let ticketService = (() => {
                 };
 
                 requester.post('appdata', 'tickets', 'kinvey', ticket).then(function (ticketInfo) {
+                }).then(function () {
                     auth.getUser(context);
-                    utils.showInfo(`${ticketsCount} tickets successfully purchased.`);
-                    context.redirect('#/home');
-                });
+                    event.ticketsCount = event.ticketsCount - ticketsCount;
+                    eventService.updateEvent(event).then(function () {
+                        utils.showInfo(`${ticketsCount} tickets successfully purchased.`);
+                        utils.displayHome(context);
+                    })
+                })
             }).catch(auth.handleError);
         }
     }
 
     function getBasketPage(context) {
-        getTickets(false).then(function (tickets) {
-            console.log(tickets);
+        getTickets().then(function (tickets) {
+            tickets = tickets.filter(t => t.is_purchased === "false" && t.user_id === sessionStorage.getItem('id'));
             if (tickets){
                 let myTickets = [];
+                console.log(tickets)
                 auth.getUser(context);
                 for (let ticket of tickets) {
                     eventService.getEventById(ticket.event_id).then(function (eventInfo) {
@@ -76,12 +81,19 @@ let ticketService = (() => {
                     });
                 }
             }
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                myTickets: '../html/basket/basketItem.hbs'
+            }).then(function () {
+                this.partial('../html/basket/basketPage.hbs');
+            })
         }).catch(auth.handleError);
     }
 
-    function getTickets(isPurchased) {
-        let user = sessionStorage.getItem('username');
-        return requester.get('appdata', 'tickets', 'kinvey', `?query={"user_id":"${user}", "is_purchased"="${isPurchased}"}&sort={"_kmd.ect": -1}`);
+    function getTickets() {
+        // return requester.get('appdata', `tickets?query={"user_id":"${userId}", "is_purchased"="${JSON.stringify(isPurchased)}"}&sort={"_kmd.ect": -1}`, 'kinvey');
+        return requester.get('appdata', 'tickets', 'kinvey');
     }
 
     function removeTicket(context) {
@@ -109,15 +121,12 @@ let ticketService = (() => {
                         user_id: ticket.user_id
                     };
 
-                    requester.update('appdata', 'tickets/' + ticket._id, 'kinvey', newTicket)
-                        .catch(auth.handleError)
+                    requester.update('appdata', 'tickets/' + ticket._id, 'kinvey', newTicket);
                 }
 
                 utils.showInfo('Successfully purchased tickets');
             }).catch(auth.handleError);
-
-
-            //context.redirect('#/home');
+            getBasketPage(context);
         }
     }
 

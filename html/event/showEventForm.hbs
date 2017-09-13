@@ -3,7 +3,7 @@
         <img style="max-height: 300px; max-width: 450px;" class="img-rounded" src="{{ image }}" alt="Main image"/>
     </div>
     <div class="col-md-7 col-lg-7 col-sm-7">
-        <h2>{{ name }}, {{ locationName }} </h2>
+        <h2>{{ name }}, {{ locationName }}</h2>
         <h4><i>{{ category }}</i></h4>>
         <h4>Price {{ price }} lv.</h4>
         <div>
@@ -12,11 +12,11 @@
         <div>
             <p>{{ description }}</p>
             <div>
-                <a href="#/purchase/:{{ evenId }}" class="btn btn-success">Buy ticket</a>
+                {{ticketsCount}} tickets available
             </div>
-        </div>
-        <div id="map-canvas">
-
+            <div style="margin-bottom: 30px">
+                <a id="purchaseBtn" href="#/purchase/:{{ evenId }}" class="btn btn-success">Buy ticket</a>
+            </div>
         </div>
     </div>
 </div>
