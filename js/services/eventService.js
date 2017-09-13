@@ -263,6 +263,26 @@ let eventService = (() => {
         }
     }
 
+    function getEventsByCategory(context, category) {
+        requester.get('appdata', 'events').then(function (events) {
+            auth.getUser(context);
+            if (category === 'All') {
+                context.events = events;
+            } else {
+                context.events = events.filter(e => e.category === category);
+            }
+
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                event: '../html/common/event.hbs'
+            }).then(function () {
+                this.partial('../html/categories/categoryPage.hbs');
+            })
+        }).catch(auth.handleError);
+
+    }
+
     return {
         registerEvent,
         loadEvents,
@@ -271,6 +291,7 @@ let eventService = (() => {
         getShowEventPage,
         editEvent,
         deleteEvent,
+        getEventsByCategory,
         getBuyTicketPage,
         buyTicket,
         getBasketPage,

@@ -3,6 +3,7 @@ $(() => {
         this.use('Handlebars', 'hbs');
 
         this.get('#/admin', function (context) {
+            auth.getUser(context);
             eventService.loadEvents(context, 'events')
         });
         

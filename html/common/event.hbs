@@ -6,7 +6,9 @@
             <div>{{location}}</div>
             <div>{{date}}</div>
             <p>{{description}}</p>
-            <p><a href="#/edit/:{{_id}}" class="btn btn-default" role="button">Edit</a> <a href="#/delete/:{{_id}}" class="btn btn-danger" role="button">Delete</a></p>
+            {{#if isAdmin}}
+                <p><a href="#/edit/:{{_id}}" class="btn btn-default" role="button">Edit</a> <a href="#/delete/:{{_id}}" class="btn btn-danger" role="button">Delete</a></p>
+            {{/if}}
         </div>
     </div>
 </div>
