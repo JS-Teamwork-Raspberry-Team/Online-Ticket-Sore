@@ -30,5 +30,39 @@
     {{ else}}
         <p>You have not purchased any tickets.</p>
     {{/if}}
-
 </div>
+<hr/>
+<section id="userDetails">
+    <div id="userDetailsDiv">
+        <form method="post" action="#/updateProfile/:{{id}}">
+            <h2>Update Your Personal Details:</h2>
+            <div class="form-group-sm">
+                <label for="firstName" class="control-label">First Name:</label>
+                <input id="firstName" type="text" class="form-control" name="firstName" value="{{firstName}}"/>
+            </div>
+            <div class="form-group-sm">
+                <label for="middleName" class="control-label">Middle Name:</label>
+                <input id="middleName" type="text" class="form-control" name="middleName" value="{{middleName}}"/>
+            </div>
+            <div class="form-group-sm">
+                <label for="lastName" class="control-label">Last Name:</label>
+                <input id="lastName" type="text" class="form-control" name="lastName" value="{{lastName}}"/>
+            </div>
+            <div class="form-group-sm">
+                <label for="address" class="control-label">Address:</label>
+                <input id="address" type="text" class="form-control" name="address" value="{{address}}"/>
+            </div>
+            <div class="form-group-sm">
+                <label for="email" class="control-label">E-mail:</label>
+                <input id="email" type="text" class="form-control" name="email" value="{{email}}"/>
+            </div>
+            <div class="form-group-sm">
+                <label for="phone" class="control-label">Phone:</label>
+                <input id="phone" type="text" class="form-control" name="phone" value="{{phone}}"/>
+            </div>
+            <div class="form-group-sm">
+                <input type="submit" class="btn btn-default" value="Save"/>
+            </div>
+        </form>
+    </div>
+</section>

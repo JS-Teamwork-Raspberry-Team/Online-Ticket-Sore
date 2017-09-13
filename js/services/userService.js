@@ -60,8 +60,19 @@ let userService = (() => {
 
     function getProfilePage(context) {
         let userId = context.params.id.substr(1);
+
+        context.email = sessionStorage.getItem('email');
+        context.isAdmin = sessionStorage.getItem('isAdmin');
+        context.basket = sessionStorage.getItem('basket');
+        context.firstName = sessionStorage.getItem('firstName');
+        context.middleName = sessionStorage.getItem('middleName');
+        context.lastName = sessionStorage.getItem('lastName');
+        context.address = sessionStorage.getItem('address');
+        context.phone = sessionStorage.getItem('phone');
+
         getUser(userId).then(function (userInfo) {
             context.username = userInfo.username;
+            context.id = sessionStorage.getItem('id');
             context.loadPartials({
                 header: '../html/common/header.hbs',
                 footer: '../html/common/footer.hbs',
@@ -76,9 +87,23 @@ let userService = (() => {
         return requester.get('user', userId, 'kinvey');
     }
 
+    function updateEditUser(userId, email, firstName, middleName, lastName, address, phone) {
+        let updatedUserObj = {
+            email,
+            firstName,
+            middleName,
+            lastName,
+            address,
+            phone
+        };
+
+        return requester.update('user', `${userId}`, 'kinvey', updatedUserObj);
+    }
+
     return {
         registerUser,
         loginUser,
-        getProfilePage
+        getProfilePage,
+        updateEditUser
     }
 })();
