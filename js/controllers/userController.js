@@ -36,5 +36,23 @@ $(() => {
         });
 
         this.get('#/profile/:id', userService.getProfilePage);
+
+        // UPDATE USER PROFILE
+        this.post('#/updateProfile/:id', function (context) {
+            let userId = context.params.id.substr(1);
+            let email = context.params.email;
+            let firstName = context.params.firstName;
+            let middleName = context.params.middleName;
+            let lastName = context.params.lastName;
+            let address = context.params.address;
+            let phone = context.params.phone;
+
+            userService.updateEditUser(userId, email, firstName, middleName, lastName, address, phone)
+                .then((respInfo) => {
+                    auth.saveSession(respInfo);
+                    utils.showInfo('User information updated successfully.');
+                    context.redirect(`#/profile/:${userId}`);
+                }).catch(auth.handleError);
+        });
     }).run();
 });
