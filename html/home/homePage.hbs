@@ -6,23 +6,26 @@
             commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.
         </p>
     </div>
-    <div class="row">
-        <hr>
-        <div style="background-color:#adadad">
-            <h3>Top events</h3>
+
+    {{#if username}}
+        <div class="row">
+            <hr>
+            <div style="background-color:#adadad">
+                <h3>Top events</h3>
+            </div>
+            {{#each topEvents }}
+                {{> event }}
+            {{/each}}
         </div>
-        {{#each topEvents }}
-            {{> event }}
-        {{/each}}
-    </div>
-    <div class="row">
-        <hr>
-        <div style="background-color:#adadad">
-            <h3>Last events</h3>
+        <div class="row">
+            <hr>
+            <div style="background-color:#adadad">
+                <h3>Last events</h3>
+            </div>
+            {{#each lastEvents }}
+                {{> event }}
+            {{/each}}
         </div>
-        {{#each lastEvents }}
-            {{> event }}
-        {{/each}}
-    </div>
+    {{/if}}
 </div>
 {{> footer}}

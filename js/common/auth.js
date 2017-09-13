@@ -47,6 +47,8 @@ let auth = (() => {
         context.id = sessionStorage.getItem('id');
         context.username = sessionStorage.getItem('username');
         context.isAdmin = sessionStorage.getItem('isAdmin') !== '';
+
+        return sessionStorage.getItem('username');
     }
 
     function handleError(reason) {

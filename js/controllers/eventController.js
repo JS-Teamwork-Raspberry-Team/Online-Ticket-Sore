@@ -7,14 +7,14 @@ $(() => {
 
         this.get('#/show/:id', eventService.getShowEventPage);
 
-        this.get('#/purchase/:eventId', eventService.getBuyTicketPage);
+        this.get('#/purchase/:eventId', ticketService.getBuyTicketPage);
 
-        this.post('#/ticket/:eventId', eventService.buyTicket);
+        this.post('#/ticket/:eventId', ticketService.buyTicket);
 
-        this.get('#/basket', eventService.getBasketPage);
+        this.get('#/basket', ticketService.getBasketPage);
 
-        this.get('#/removeTicket/:ticketId', eventService.removeTicket);
+        this.get('#/removeTicket/:ticketId', ticketService.removeTicket);
 
-        this.get('#/purchaseTickets', eventService.purchaseTickets);
+        this.get('#/purchaseTickets', ticketService.purchaseTickets);
     }).run()
 });

@@ -27,23 +27,37 @@ let utils = (() => {
     }
 
     function displayHome(context) {
-        let events = [
-            { eventId: 1, title: 'Hawaii Party', description: 'Come to our party and have fun! We love you <3 '},
-            { eventId: 2, title: 'Chris Brown Concert at Sofia, Bulgaria', description: 'Do you love Chris Brown? Come to see him.'},
-            { eventId: 3, title: 'Art fest at the zoo', description: 'Dogs, elephants, donkeys, monkeys and others are going to have a fest.'}
-        ];
+        if(auth.getUser(context)) {
+            requester.get('appdata', 'events', '?sort={"_kmd.ect": -1}').then(function (events) {
+                let lastEvents = [];
+                for (let i = 0; i < Math.min(events.length, 6); i++) {
+                    let event = events[i];
+                    lastEvents.push({
+                        eventId: event._id,
+                        title: event.name,
+                        description: event.description
+                    });
+                }
 
-        context.lastEvents = events;
-        context.topEvents = events;
-        auth.getUser(context);
-
-        context.loadPartials({
-            header: '../html/common/header.hbs',
-            footer: '../html/common/footer.hbs',
-            event: '../html/home/event.hbs'
-        }).then(function () {
-            this.partial('../html/home/homePage.hbs');
-        });
+                context.lastEvents = lastEvents;
+                context.topEvents = lastEvents;
+                context.loadPartials({
+                    header: '../html/common/header.hbs',
+                    footer: '../html/common/footer.hbs',
+                    event: '../html/home/event.hbs'
+                }).then(function () {
+                    this.partial('../html/home/homePage.hbs');
+                });
+            }).catch(auth.handleError);
+        } else {
+            context.loadPartials({
+                header: '../html/common/header.hbs',
+                footer: '../html/common/footer.hbs',
+                event: '../html/home/event.hbs'
+            }).then(function () {
+                this.partial('../html/home/homePage.hbs');
+            });
+        }
     }
 
     function validateEventData(data) {
