@@ -73,6 +73,7 @@ let userService = (() => {
         getUser(userId).then(function (userInfo) {
             context.username = userInfo.username;
             context.id = sessionStorage.getItem('id');
+
             context.loadPartials({
                 header: '../html/common/header.hbs',
                 footer: '../html/common/footer.hbs',
@@ -94,7 +95,8 @@ let userService = (() => {
             middleName,
             lastName,
             address,
-            phone
+            phone,
+            isAdmin: sessionStorage.getItem('isAdmin')
         };
 
         return requester.update('user', `${userId}`, 'kinvey', updatedUserObj);

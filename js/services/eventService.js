@@ -44,6 +44,7 @@ let eventService = (() => {
                 case 'finished': filteredEvents = events.filter(e => e.date < currentDate); break;
                 default: break;
             }
+
             auth.getUser(context);
             context.events = filteredEvents;
             context.loadPartials({
@@ -94,6 +95,7 @@ let eventService = (() => {
         sessionStorage.setItem('eventId', eventId);
         eventService.getEventById(eventId).then(function (event) {
             let availableTickets = event.ticketsCount  === "0" ? 'No' : event.ticketsCount;
+            auth.getUser(context);
             context.evenId = eventId;
             context.name = event.name;
             context.image = event.image;

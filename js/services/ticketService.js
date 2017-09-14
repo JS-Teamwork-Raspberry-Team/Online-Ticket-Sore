@@ -57,7 +57,6 @@ let ticketService = (() => {
             tickets = tickets.filter(t => t.is_purchased === "false" && t.user_id === sessionStorage.getItem('id'));
             if (tickets){
                 let myTickets = [];
-                console.log(tickets)
                 auth.getUser(context);
                 for (let ticket of tickets) {
                     eventService.getEventById(ticket.event_id).then(function (eventInfo) {
@@ -126,7 +125,7 @@ let ticketService = (() => {
 
                 utils.showInfo('Successfully purchased tickets');
             }).catch(auth.handleError);
-            getBasketPage(context);
+            utils.displayHome(context);
         }
     }
 

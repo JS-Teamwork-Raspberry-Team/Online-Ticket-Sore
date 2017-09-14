@@ -16,6 +16,10 @@
             </div>
             <div style="margin-bottom: 30px">
                 <a id="purchaseBtn" href="#/purchase/:{{ evenId }}" class="btn btn-success">Buy ticket</a>
+                {{#if isAdmin}}
+                    <a href="#/edit/:{{evenId}}" class="btn btn-default" role="button">Edit</a>
+                    <a href="#/delete/:{{evenId}}" class="btn btn-danger" role="button">Delete</a>
+                {{/if}}
             </div>
         </div>
     </div>

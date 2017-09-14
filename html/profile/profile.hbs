@@ -1,41 +1,8 @@
-<p>Hello, {{ username }}</p>
-<div>
-    {{#if tickets}}
-        <table class="table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Event</th>
-                <th>Location</th>
-                <th>Price</th>
-                <th>Count</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each tickets}}
-                <tr>
-                    <td>{{ inc @index }}</td>
-                    <td>{{ eventName }}</td>
-                    <td>{{ eventLocation }}</td>
-                    <td>{{ ticketPrice }}</td>
-                    <td>{{ ticketCount }}</td>
-                    <td>{{ total }}</td>
-                    <td><a href="#/removeTicket/:{{ ticketId }}"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    {{ else}}
-        <p>You have not purchased any tickets.</p>
-    {{/if}}
-</div>
-<hr/>
 <section id="userDetails">
     <div id="userDetailsDiv">
         <form method="post" action="#/updateProfile/:{{id}}">
-            <h2>Update Your Personal Details:</h2>
+            <h2>Hello, {{ username }}</h2>
+            <h3>Update Your Personal Details:</h3>
             <div class="form-group-sm">
                 <label for="firstName" class="control-label">First Name:</label>
                 <input id="firstName" type="text" class="form-control" name="firstName" value="{{firstName}}"/>
